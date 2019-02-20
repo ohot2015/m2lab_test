@@ -1,0 +1,80 @@
+//предлагаю переделать тестове задание
+/*
+замечания
+  попробуйте использовать что то одно , либо jquery  либо vue
+  гораздо удобнее использовать https://ru.vuejs.org/v2/api/index.html#vm-refs
+  или
+  нет в проекте файла .gitignore у меня скачался весь node_modules
+  так же нет фала package.json
+  7. При обновлении страницы введенные данные в поля ввода не должны пропадать.
+    это не получилось ? '
+*/
+const app = new Vue ({
+    el: '#app',
+    data: {
+        //
+        resp:{},
+
+        message: '',
+        cps:[
+          { text: 'WMR', buy_value: data.buy.wmr, sell_value: data.sell.wmr},
+          { text: 'WMZ', buy_value: data.buy.wmz, sell_value: data.sell.wmz }
+        ],
+        buy:{
+            wmr: data.buy.wmr,
+            wmz: data.buy.wmz
+        },
+        sell:{
+            wmr: data.sell.wmr,
+            wmz: data.sell.wmz
+        }
+    },
+    methods: {
+        change_buy: function(){
+            let cnt = 0;
+
+
+            // пример нормального форматирования кода
+
+            if ( $('#input-buy').val() != ''
+                && $('#input-buy').val() != 0
+                && $('#select-buy').val()) {
+
+              cnt = $('#select-buy').val() * $('#input-buy').val();
+            }
+
+            $('#input-buy-cnt').text(cnt);
+        },
+        change_sell: function(){
+            let cnt = 0;
+            if($('#input-sell').val()!='' && $('#input-sell').val()!=0 && $('#select-sell').val()) cnt = $('#input-sell').val() / $('#select-sell').val();
+            $('#input-sell-cnt').text(cnt);
+        },
+        isNumberKey: function(evt){
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+                //evt ??
+                event.preventDefault();
+                return false;
+            }
+        }
+    },
+    created() {
+        // пункт из readme 2. Предположим что data приходит из бекa.
+        // функция setTimeout присвает данные с задержкой ,что как бы похоже на серверный ответ. её удалять нельзя.
+        setTimeout(()=>{
+
+          data = {
+            sell:{
+              wmr: 0.96,
+              wmz: 55.7,
+            },
+            buy:{
+              wmr:1,
+              wmz:58.9,
+            }
+          }
+          this.resp = data;
+        },1000)
+    }
+})
